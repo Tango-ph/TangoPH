@@ -401,6 +401,27 @@
         .modal-desc .spec-list li { padding: 4px 0; position: relative; padding-left: 18px; color: #ccc; }
         .modal-desc .spec-list li::before { content: '▸'; color: var(--primary-gold); position: absolute; left: 0; font-size: 12px; top: 5px; }
 
+        /* ONE SIZE FIT label */
+        .one-size-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid var(--primary-gold);
+            border-radius: 4px;
+            background-color: rgba(212, 160, 86, 0.1);
+            color: var(--primary-gold);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .one-size-label i {
+            font-size: 12px;
+        }
+
         .quantity-row { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
         .quantity-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-grey); }
 
@@ -850,7 +871,7 @@
     <header class="hero">
         <p class="hero-subtitle">Premium Headwear</p>
         <h1 class="hero-title">TANGO</h1>
-        <p class="hero-desc">This is just a warning.</p>
+        <p class="hero-desc">Premium Dota Collection</p>
         <div class="hero-buttons">
             <a href="#shop" class="btn btn-primary">Shop Now <i class="fas fa-arrow-right"></i></a>
             <a href="#shop" class="btn btn-outline">View Gallery</a>
@@ -927,6 +948,10 @@
                 <h2 class="modal-title" id="modal-title">Classic Black</h2>
                 <div class="modal-price" id="modal-price">₱35.00</div>
                 <div class="modal-desc" id="modal-desc">Premium quality cap with embroidered logo.</div>
+                <div class="one-size-label">
+                    <i class="fas fa-hat-cowboy"></i>
+                    One Size Fit
+                </div>
                 <div class="quantity-row">
                     <span class="quantity-label">Quantity</span>
                     <div class="quantity-controls">
