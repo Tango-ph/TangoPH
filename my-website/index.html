@@ -32,7 +32,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 50px;
+            padding: 15px 50px; /* Reduced vertical padding slightly to fit larger logo */
             position: fixed;
             width: 100%;
             z-index: 100;
@@ -53,7 +53,7 @@
         }
 
         .logo img {
-            height: 45px;      /* You can adjust this height if needed */
+            height: 65px;      /* INCREASED SIZE HERE (was 45px) */
             width: auto;
             display: block;
             object-fit: contain;
@@ -440,7 +440,7 @@
         /* --- Responsive --- */
         @media (max-width: 768px) {
             .navbar {
-                padding: 15px 20px;
+                padding: 10px 20px;
             }
 
             .nav-links {
@@ -448,7 +448,7 @@
             }
 
             .logo img {
-                height: 35px; /* Smaller logo on mobile */
+                height: 50px; /* Adjusted mobile size (was 35px) */
             }
 
             .hero {
@@ -510,7 +510,6 @@
 
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
-        <!-- LOGO UPDATED WITH YOUR CORRECT LINK -->
         <a href="#" class="logo">
             <img src="https://i.imgur.com/sBSYAaM.png" alt="TANGO Logo">
         </a>
