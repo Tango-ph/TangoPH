@@ -45,7 +45,6 @@
             background-color: var(--bg-dark);
             color: var(--text-white);
             overflow-x: hidden;
-            padding-bottom: 0;
         }
 
         /* --- Navbar --- */
@@ -247,7 +246,7 @@
             color: var(--text-grey);
         }
 
-        /* UPGRADE 7: Best Sellers / Trending Section */
+        /* Trending */
         .trending-section {
             padding: 60px 50px 30px;
             border-bottom: 1px solid #222;
@@ -351,7 +350,6 @@
             gap: 30px;
         }
 
-        /* UPGRADE 10: Smooth scroll fade-in animation */
         .product-card {
             background-color: var(--bg-card);
             border-radius: 8px;
@@ -422,7 +420,7 @@
             color: black;
         }
 
-        /* UPGRADES 1 & 2: Stock badges and New/Sale badges */
+        /* Badges */
         .badge-container {
             position: absolute;
             top: 12px;
@@ -470,7 +468,6 @@
             right: 12px;
         }
 
-        /* Original price strikethrough */
         .product-price-row {
             display: flex;
             align-items: center;
@@ -531,7 +528,6 @@
             z-index: 10;
         }
 
-        /* UPGRADE 3: Image gallery layout */
         .modal-image-section {
             width: 50%;
             display: flex;
@@ -643,7 +639,6 @@
             border-color: var(--primary-gold);
         }
 
-        /* UPGRADE 4: Quantity selector in modal */
         .quantity-row {
             display: flex;
             align-items: center;
@@ -772,7 +767,6 @@
             font-size: 14px;
         }
 
-        /* UPGRADE 14: Quantity controls in cart */
         .cart-item-controls {
             display: flex;
             align-items: center;
@@ -823,7 +817,79 @@
             color: #ff6666;
         }
 
-        /* UPGRADE 17: Delivery fee estimator */
+        /* UPGRADE 35: Payment method selector */
+        .payment-section {
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .payment-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-grey);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: #242424;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-gold);
+        }
+
+        .payment-option.active {
+            border-color: var(--primary-gold);
+            background-color: rgba(212, 160, 86, 0.1);
+        }
+
+        .payment-radio {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid #555;
+            flex-shrink: 0;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+
+        .payment-option.active .payment-radio {
+            border-color: var(--primary-gold);
+        }
+
+        .payment-option.active .payment-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-gold);
+            border-radius: 50%;
+        }
+
+        .payment-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
         .delivery-section {
             padding: 15px 0;
             border-bottom: 1px solid #333;
@@ -997,7 +1063,7 @@
             grid-column: 1 / -1;
         }
 
-        /* --- Toast Notification --- */
+        /* --- Toast --- */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -1034,7 +1100,6 @@
             line-height: 1.3;
         }
 
-        /* --- Footer --- */
         footer {
             background-color: black;
             padding: 50px;
@@ -1050,7 +1115,7 @@
             margin: 0 auto;
         }
 
-        /* UPGRADE 13: Mobile Bottom Navbar */
+        /* Mobile Bottom Nav */
         .mobile-bottom-nav {
             display: none;
             position: fixed;
@@ -1102,115 +1167,35 @@
             height: 16px;
         }
 
-        /* --- Responsive --- */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 10px 20px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .logo img {
-                height: 50px;
-            }
-
-            body {
-                padding-bottom: 70px; /* Space for bottom nav */
-            }
-
-            .mobile-bottom-nav {
-                display: flex;
-            }
-
-            .hero {
-                padding: 0 20px;
-                height: 70vh;
-                align-items: center;
-                text-align: center;
-            }
-
-            .hero-title {
-                font-size: 3rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .features-bar {
-                flex-direction: column;
-                gap: 20px;
-                padding: 30px 20px;
-            }
-
-            .trending-section {
-                padding: 40px 20px 20px;
-            }
-
-            .shop-section {
-                padding: 40px 20px;
-            }
-
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
-            }
-
-            .filters {
-                width: 100%;
-                overflow-x: auto;
-                padding-bottom: 10px;
-            }
-
-            .modal-content {
-                flex-direction: column;
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-
-            .modal-image-section, .modal-details {
-                width: 100%;
-            }
-
-            .modal-image {
-                height: 280px;
-            }
-
-            .toast {
-                bottom: 85px;
-                right: 15px;
-                left: 15px;
-                max-width: none;
-            }
-
-            .search-modal {
-                padding: 80px 20px 90px;
-            }
-
-            .search-input {
-                font-size: 1rem;
-                padding: 15px 20px;
-            }
-
-            .search-results {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 15px;
-            }
-
-            .search-result-item img {
-                height: 120px;
-            }
+            .navbar { padding: 10px 20px; }
+            .nav-links { display: none; }
+            .logo img { height: 50px; }
+            body { padding-bottom: 70px; }
+            .mobile-bottom-nav { display: flex; }
+            .hero { padding: 0 20px; height: 70vh; align-items: center; text-align: center; }
+            .hero-title { font-size: 3rem; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .features-bar { flex-direction: column; gap: 20px; padding: 30px 20px; }
+            .trending-section { padding: 40px 20px 20px; }
+            .shop-section { padding: 40px 20px; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .filters { width: 100%; overflow-x: auto; padding-bottom: 10px; }
+            .modal-content { flex-direction: column; max-height: 90vh; overflow-y: auto; }
+            .modal-image-section, .modal-details { width: 100%; }
+            .modal-image { height: 280px; }
+            .toast { bottom: 85px; right: 15px; left: 15px; max-width: none; }
+            .search-modal { padding: 80px 20px 90px; }
+            .search-input { font-size: 1rem; padding: 15px 20px; }
+            .search-results { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .search-result-item img { height: 120px; }
+            .payment-options { grid-template-columns: 1fr; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <a href="#" class="logo">
             <img src="https://i.imgur.com/oOWYzf7.png" alt="TANGO Logo">
@@ -1229,7 +1214,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <header class="hero">
         <p class="hero-subtitle">Premium Headwear</p>
         <h1 class="hero-title">TANGO</h1>
@@ -1240,7 +1224,6 @@
         </div>
     </header>
 
-    <!-- Features Bar -->
     <div class="features-bar">
         <div class="feature-item">
             <i class="far fa-gem feature-icon"></i>
@@ -1272,7 +1255,6 @@
         </div>
     </div>
 
-    <!-- UPGRADE 7: Trending / Best Sellers Section -->
     <section class="trending-section">
         <div class="trending-header">
             <div class="trending-title-wrapper">
@@ -1283,7 +1265,6 @@
         <div class="trending-scroll" id="trending-scroll"></div>
     </section>
 
-    <!-- Shop Section -->
     <section class="shop-section" id="shop">
         <div class="section-header">
             <div class="section-title-wrapper">
@@ -1302,22 +1283,17 @@
         <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <!-- Product Modal -->
     <div class="modal" id="product-modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            
-            <!-- UPGRADE 3: Image Gallery -->
             <div class="modal-image-section">
                 <img class="modal-image" id="modal-img" src="" alt="Product">
                 <div class="thumbnail-row" id="thumbnail-row"></div>
             </div>
-
             <div class="modal-details">
                 <h2 class="modal-title" id="modal-title">Classic Black</h2>
                 <div class="modal-price" id="modal-price">₱35.00</div>
                 <div class="modal-desc" id="modal-desc">Premium quality cap with embroidered logo.</div>
-                
                 <h4 style="margin-bottom: 10px; font-size: 12px; text-transform: uppercase;">Select Size</h4>
                 <div class="size-selector">
                     <div class="size-btn" onclick="selectSize(this)">S</div>
@@ -1325,8 +1301,6 @@
                     <div class="size-btn" onclick="selectSize(this)">L</div>
                     <div class="size-btn" onclick="selectSize(this)">XL</div>
                 </div>
-
-                <!-- UPGRADE 4: Quantity Selector -->
                 <div class="quantity-row">
                     <span class="quantity-label">Quantity</span>
                     <div class="quantity-controls">
@@ -1335,7 +1309,6 @@
                         <button class="quantity-btn" onclick="changeModalQty(1)">+</button>
                     </div>
                 </div>
-
                 <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="addToCart()">
                     Add to Cart <i class="fas fa-shopping-bag"></i>
                 </button>
@@ -1343,7 +1316,6 @@
         </div>
     </div>
 
-    <!-- Cart Modal -->
     <div class="modal" id="cart-modal">
         <div class="cart-modal-content">
             <button class="modal-close" onclick="closeCart()"><i class="fas fa-times"></i></button>
@@ -1352,7 +1324,6 @@
         </div>
     </div>
 
-    <!-- Search Modal -->
     <div class="search-modal" id="search-modal">
         <div class="search-modal-content">
             <div class="search-header">
@@ -1363,13 +1334,11 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <div class="toast-text" id="toastText">Item added to cart</div>
     </div>
 
-    <!-- UPGRADE 13: Mobile Bottom Navbar -->
     <nav class="mobile-bottom-nav">
         <a href="#" class="nav-item active">
             <i class="fas fa-home"></i>
@@ -1414,13 +1383,14 @@
             "Pickup (Free)": 0
         };
 
-        // --- Product Data ---
-        // New fields: 
-        //   images: array of image URLs (UPGRADE 3)
-        //   stock: number (UPGRADE 1)
-        //   isNew: boolean (UPGRADE 2)
-        //   originalPrice: number or null (UPGRADE 2 - for sale)
-        //   trending: boolean (UPGRADE 7)
+        // UPGRADE 35: Payment methods
+        const PAYMENT_METHODS = [
+            { id: "gcash", name: "GCash" },
+            { id: "maya", name: "Maya" },
+            { id: "bank", name: "Bank Transfer" },
+            { id: "cod", name: "Cash on Delivery" }
+        ];
+
         const products = [
             {
                 id: 1,
@@ -1474,9 +1444,7 @@
                 isNew: false,
                 trending: false,
                 image: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?q=80&w=2070&auto=format&fit=crop",
-                images: [
-                    "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?q=80&w=2070&auto=format&fit=crop"
-                ],
+                images: ["https://images.unsplash.com/photo-1556306535-0f09a537f0a3?q=80&w=2070&auto=format&fit=crop"],
                 desc: "Black on black trucker cap. Breathable mesh back with a premium front panel."
             },
             {
@@ -1505,9 +1473,7 @@
                 isNew: false,
                 trending: false,
                 image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop",
-                images: [
-                    "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop"
-                ],
+                images: ["https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop"],
                 desc: "Limited edition red cap. Only 100 pieces made worldwide."
             },
             {
@@ -1520,9 +1486,7 @@
                 isNew: false,
                 trending: true,
                 image: "https://images.unsplash.com/photo-1533055640609-24b498dfd74c?q=80&w=1974&auto=format&fit=crop",
-                images: [
-                    "https://images.unsplash.com/photo-1533055640609-24b498dfd74c?q=80&w=1974&auto=format&fit=crop"
-                ],
+                images: ["https://images.unsplash.com/photo-1533055640609-24b498dfd74c?q=80&w=1974&auto=format&fit=crop"],
                 desc: "Classic navy blue dad cap. Soft cotton twill for maximum comfort."
             },
             {
@@ -1535,9 +1499,7 @@
                 isNew: false,
                 trending: false,
                 image: "https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop",
-                images: [
-                    "https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop"
-                ],
+                images: ["https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop"],
                 desc: "Camouflage trucker cap for the outdoor enthusiast."
             },
             {
@@ -1550,21 +1512,18 @@
                 isNew: false,
                 trending: false,
                 image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop",
-                images: [
-                    "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop"
-                ],
+                images: ["https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop"],
                 desc: "Crisp white snapback. A clean look for any outfit."
             }
         ];
 
-        // --- State ---
         let cart = JSON.parse(localStorage.getItem('tangoCart') || '[]');
         let currentProduct = null;
         let currentSize = 'M';
         let currentQty = 1;
-        let selectedDelivery = "Metro Manila";
+        let selectedDelivery = localStorage.getItem('tangoDelivery') || "Metro Manila";
+        let selectedPayment = localStorage.getItem('tangoPayment') || "gcash";
 
-        // --- Helpers ---
         function getStockBadge(stock) {
             if (stock === 0) return { class: 'badge-soldout', text: 'Sold Out' };
             if (stock <= 3) return { class: 'badge-lowstock', text: `Low Stock (${stock} left)` };
@@ -1576,29 +1535,21 @@
             if (product.isNew) html += '<span class="badge badge-new">New</span>';
             if (product.originalPrice) html += '<span class="badge badge-sale">Sale</span>';
             html += '</div>';
-
-            // Stock badge on the right side
             const stock = getStockBadge(product.stock);
             html += `<div class="badge-container right"><span class="badge ${stock.class}">${stock.text}</span></div>`;
             return html;
         }
 
-        // --- Render Products ---
         const grid = document.getElementById('product-grid');
 
         function renderProducts(filter = 'all') {
             grid.innerHTML = '';
-            
             const filteredProducts = filter === 'all' 
                 ? products 
                 : products.filter(p => p.category === filter);
-
             filteredProducts.forEach(product => {
-                const card = createProductCard(product);
-                grid.appendChild(card);
+                grid.appendChild(createProductCard(product));
             });
-
-            // UPGRADE 10: Trigger fade-in animations
             setTimeout(observeCards, 50);
         }
 
@@ -1629,7 +1580,6 @@
             return card;
         }
 
-        // UPGRADE 7: Render Trending Section
         function renderTrending() {
             const container = document.getElementById('trending-scroll');
             const trendingItems = products.filter(p => p.trending);
@@ -1638,7 +1588,6 @@
             });
         }
 
-        // UPGRADE 10: Fade-in on scroll
         let observer;
         function observeCards() {
             if (observer) observer.disconnect();
@@ -1650,20 +1599,17 @@
                     }
                 });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.product-card').forEach((card, i) => {
                 setTimeout(() => observer.observe(card), i * 40);
             });
         }
 
-        // --- Filter ---
         function filterProducts(category) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             renderProducts(category);
         }
 
-        // --- Product Modal ---
         const modal = document.getElementById('product-modal');
 
         function openModal(product) {
@@ -1676,7 +1622,6 @@
             document.getElementById('modal-desc').innerHTML = product.desc;
             document.getElementById('modalQty').textContent = '1';
 
-            // UPGRADE 3: Load main image + thumbnails
             const images = product.images || [product.image];
             document.getElementById('modal-img').src = images[0];
 
@@ -1696,16 +1641,13 @@
                 });
             }
 
-            // Reset size selector
             document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.size-btn')[1].classList.add('active');
 
             modal.style.display = 'flex';
         }
 
-        function closeModal() {
-            modal.style.display = 'none';
-        }
+        function closeModal() { modal.style.display = 'none'; }
 
         function selectSize(element) {
             document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
@@ -1713,7 +1655,6 @@
             currentSize = element.textContent.trim();
         }
 
-        // UPGRADE 4: Quantity in modal
         function changeModalQty(delta) {
             if (!currentProduct) return;
             const newQty = currentQty + delta;
@@ -1723,10 +1664,8 @@
             document.getElementById('modalQty').textContent = currentQty;
         }
 
-        // --- Add to Cart ---
         function addToCart() {
             if (!currentProduct) return;
-
             if (currentProduct.stock === 0) {
                 showToast('Sorry, this cap is sold out');
                 return;
@@ -1751,7 +1690,7 @@
 
             saveCart();
             updateCartBadge();
-            showToast(`${currentQty}x ${currentProduct.name} (Size ${currentSize}) added to cart`);
+            showToast(`${currentQty}x ${currentProduct.name} (Size ${currentSize}) added`);
             closeModal();
         }
 
@@ -1761,10 +1700,8 @@
 
         function updateCartBadge() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            
             const badge = document.getElementById('cartBadge');
             const badgeMobile = document.getElementById('cartBadgeMobile');
-            
             if (totalItems > 0) {
                 badge.textContent = totalItems;
                 badge.classList.add('show');
@@ -1778,7 +1715,6 @@
             }
         }
 
-        // --- Toast ---
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -1788,7 +1724,6 @@
             toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // --- Cart Modal ---
         const cartModal = document.getElementById('cart-modal');
 
         function openCart() {
@@ -1796,9 +1731,7 @@
             cartModal.style.display = 'flex';
         }
 
-        function closeCart() {
-            cartModal.style.display = 'none';
-        }
+        function closeCart() { cartModal.style.display = 'none'; }
 
         function renderCart() {
             const container = document.getElementById('cartItemsContainer');
@@ -1819,7 +1752,6 @@
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
-
                 itemsHtml += `
                     <div class="cart-item">
                         <img src="${item.image}" alt="${item.name}" class="cart-item-img">
@@ -1827,7 +1759,6 @@
                             <div class="cart-item-name">${item.name}</div>
                             <div class="cart-item-meta">Size: ${item.size}</div>
                             <div class="cart-item-price">₱${itemTotal.toFixed(2)}</div>
-                            <!-- UPGRADE 14: Cart quantity controls -->
                             <div class="cart-item-controls">
                                 <button class="cart-qty-btn" onclick="changeCartQty(${index}, -1)">−</button>
                                 <span class="cart-qty-value">${item.quantity}</span>
@@ -1841,11 +1772,25 @@
                 `;
             });
 
-            // UPGRADE 17: Delivery fee calculator
             const deliveryFee = DELIVERY_FEES[selectedDelivery] || 0;
             const grandTotal = subtotal + deliveryFee;
 
+            // UPGRADE 35: Payment method selector HTML
+            const paymentOptionsHtml = PAYMENT_METHODS.map(pm => `
+                <div class="payment-option ${selectedPayment === pm.id ? 'active' : ''}" onclick="selectPayment('${pm.id}')">
+                    <div class="payment-radio"></div>
+                    <div class="payment-name">${pm.name}</div>
+                </div>
+            `).join('');
+
             itemsHtml += `
+                <div class="payment-section">
+                    <label class="payment-label">Preferred Payment Method</label>
+                    <div class="payment-options">
+                        ${paymentOptionsHtml}
+                    </div>
+                </div>
+
                 <div class="delivery-section">
                     <label class="delivery-label">Delivery Region</label>
                     <select class="delivery-select" id="deliverySelect" onchange="changeDelivery(this.value)">
@@ -1880,7 +1825,6 @@
             container.innerHTML = itemsHtml;
         }
 
-        // UPGRADE 14: Adjust quantity in cart
         function changeCartQty(index, delta) {
             const newQty = cart[index].quantity + delta;
             if (newQty < 1) return;
@@ -1902,13 +1846,19 @@
             renderCart();
         }
 
-        // UPGRADE 17: Change delivery region
         function changeDelivery(region) {
             selectedDelivery = region;
+            localStorage.setItem('tangoDelivery', region);
             renderCart();
         }
 
-        // --- Buy Now ---
+        // UPGRADE 35: Handle payment method selection
+        function selectPayment(methodId) {
+            selectedPayment = methodId;
+            localStorage.setItem('tangoPayment', methodId);
+            renderCart();
+        }
+
         function buyNow() {
             if (cart.length === 0) return;
 
@@ -1922,9 +1872,14 @@
             const deliveryFee = DELIVERY_FEES[selectedDelivery] || 0;
             const total = subtotal + deliveryFee;
 
+            // UPGRADE 35: Find payment method name and include in message
+            const paymentMethod = PAYMENT_METHODS.find(pm => pm.id === selectedPayment);
+            const paymentName = paymentMethod ? paymentMethod.name : 'GCash';
+
             message += `\nSubtotal: ₱${subtotal.toFixed(2)}\n`;
             message += `Delivery (${selectedDelivery}): ₱${deliveryFee.toFixed(2)}\n`;
             message += `Total: ₱${total.toFixed(2)}\n\n`;
+            message += `Preferred Payment: ${paymentName}\n\n`;
             message += "Please confirm availability and payment details. Thank you!";
 
             const encodedMessage = encodeURIComponent(message);
@@ -1933,7 +1888,6 @@
             window.open(messengerUrl, '_blank');
         }
 
-        // --- Search ---
         const searchModal = document.getElementById('search-modal');
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
@@ -1953,17 +1907,14 @@
 
         function performSearch() {
             const query = searchInput.value.toLowerCase().trim();
-
             if (query === '') {
                 searchResults.innerHTML = '';
                 return;
             }
-
             const matches = products.filter(product => 
                 product.name.toLowerCase().includes(query) ||
                 product.category.toLowerCase().includes(query)
             );
-
             if (matches.length === 0) {
                 searchResults.innerHTML = `
                     <div class="search-empty">
@@ -1973,7 +1924,6 @@
                 `;
                 return;
             }
-
             searchResults.innerHTML = '';
             matches.forEach(product => {
                 const item = document.createElement('div');
@@ -1993,25 +1943,21 @@
             });
         }
 
-        // --- Navbar Scroll ---
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
-        // --- Close on outside click ---
         window.onclick = function(event) {
             if (event.target == modal) closeModal();
             if (event.target == cartModal) closeCart();
         }
 
-        // --- Escape key ---
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && searchModal.style.display === 'block') closeSearch();
         });
 
-        // --- Initialize ---
         renderProducts();
         renderTrending();
         updateCartBadge();
