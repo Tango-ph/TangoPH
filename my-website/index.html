@@ -1039,7 +1039,7 @@
     </footer>
 
     <!-- Sanity CDN Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@sanity/client@7/dist/browser/sanity-client.min.js"></script>
+    <script src="https://unpkg.com/@sanity/client"></script>
 
     <script>
         // ============================================
@@ -1082,8 +1082,8 @@
         let selectedPayment = localStorage.getItem('tangoPayment') || "gcash";
 
         // --- Initialize Sanity Client ---
-        // FIX: renamed from sanityClient to sanity to avoid variable name collision
-        const sanity = sanityClient({
+        // FIX: Using SanityClient.createClient() from the unpkg UMD build
+        const sanity = SanityClient.createClient({
             projectId: SANITY_PROJECT_ID,
             dataset: SANITY_DATASET,
             apiVersion: '2024-01-01',
