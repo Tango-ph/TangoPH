@@ -1489,8 +1489,8 @@
             let message = "Hi TANGO! I would like to order:\n\n";
             
             cart.forEach(item => {
-                message += `• ${item.name} x${item.quantity} — ₱${(item.price * item.quantity).toFixed(2)}\n`;
-            });
+    message += `- ${item.name} x${item.quantity} = PHP ${(item.price * item.quantity).toFixed(2)}\n`;
+});
 
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const deliveryFee = DELIVERY_FEES[selectedDelivery] || 0;
@@ -1501,17 +1501,18 @@
 
             const isInternational = selectedDelivery === "International";
 
-            message += `\nSubtotal: ₱${subtotal.toFixed(2)}\n`;
-            message += `Delivery (${selectedDelivery}): ₱${deliveryFee.toFixed(2)}${isInternational ? ' (estimated)' : ''}\n`;
-            message += `Total: ₱${total.toFixed(2)}\n\n`;
+            message += `\nSubtotal: PHP${subtotal.toFixed(2)}\n`;
+            message += `Delivery (${selectedDelivery}): PHP${deliveryFee.toFixed(2)}${isInternational ? ' (estimated)' : ''}\n`;
+            message += `Total: PHP${total.toFixed(2)}\n\n`;
             message += `Preferred Payment: ${paymentName}\n`;
 
             if (isInternational) {
-                message += `\n🌍 Note: I understand international shipping fees are subject to confirmation.\n`;
+                message += `\nNote: I understand international shipping fees are subject to confirmation.\n`;
             }
 
             message += "\nPlease confirm availability and payment details. Thank you!";
-
+// Strip anything outside basic ASCII (removes ₱, •, emojis, etc.)
+message = message.replace(/[^\x00-\x7F]/g, '');
             const encodedMessage = encodeURIComponent(message);
             const messengerUrl = `https://m.me/${FB_PAGE_NAME}?text=${encodedMessage}`;
 
