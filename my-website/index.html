@@ -1070,43 +1070,8 @@
             { id: "cod", name: "Cash on Delivery" }
         ];
 
-        // Fallback products (shown if Sanity is unavailable)
-        const fallbackProducts = [
-            {
-                id: "1",
-                name: "Classic Black",
-                category: "snapback",
-                price: 35.00,
-                originalPrice: 45.00,
-                stock: 15,
-                isNew: false,
-                trending: true,
-                image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop",
-                images: ["https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop"],
-                desc: "The essential black snapback."
-            },
-            {
-                id: "2",
-                name: "Tango Cap Version #1",
-                category: "snapback",
-                price: 999.00,
-                stock: 3,
-                isNew: true,
-                trending: true,
-                image: "https://i.imgur.com/V2v90z1.jpeg",
-                images: ["https://i.imgur.com/V2v90z1.jpeg"],
-                desc: `<ul class="spec-list">
-                    <li>A frame Baseball Cap</li>
-                    <li>Cotton fabric</li>
-                    <li>Embroidery logo</li>
-                    <li>Flat visor (moss green)</li>
-                    <li>Eyelets (moss green)</li>
-                    <li>Buttons (moss green)</li>
-                    <li>Snap back adjuster (moss green)</li>
-                    <li>Underlining print (off white stitches and black print)</li>
-                </ul>`
-            }
-        ];
+        // Fallback products (empty — Sanity is the source of truth)
+        const fallbackProducts = [];
 
         let products = [];
         let cart = JSON.parse(localStorage.getItem('tangoCart') || '[]');
@@ -1117,7 +1082,8 @@
         let selectedPayment = localStorage.getItem('tangoPayment') || "gcash";
 
         // --- Initialize Sanity Client ---
-        const sanityClient = sanityClient({
+        // FIX: renamed from sanityClient to sanity to avoid variable name collision
+        const sanity = sanityClient({
             projectId: SANITY_PROJECT_ID,
             dataset: SANITY_DATASET,
             apiVersion: '2024-01-01',
@@ -1148,7 +1114,7 @@
                     trending
                 }`;
 
-                const sanityProducts = await sanityClient.fetch(query);
+                const sanityProducts = await sanity.fetch(query);
 
                 // Map Sanity fields to match our shop's expected format
                 products = sanityProducts.map(p => ({
@@ -1166,8 +1132,7 @@
                 }));
 
                 if (products.length === 0) {
-                    console.warn('No products found in Sanity. Using fallback.');
-                    products = fallbackProducts;
+                    console.warn('No products in Sanity yet. Add some in the Studio!');
                 }
             } catch (err) {
                 console.error('Sanity fetch failed:', err);
@@ -1239,7 +1204,6 @@
             container.innerHTML = '';
             const trendingItems = products.filter(p => p.trending);
             if (trendingItems.length === 0) {
-                // If no trending items, show first 4
                 products.slice(0, 4).forEach(product => {
                     container.appendChild(createProductCard(product));
                 });
