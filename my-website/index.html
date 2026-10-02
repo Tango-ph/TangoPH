@@ -4,12 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TANGO | Premium Headwear</title>
-    <!-- 
-      ⚠️ FAVICON INSTRUCTIONS ⚠️
-      Replace the URL below with a SQUARE version of your logo 
-      (e.g., just the cap icon or the "T"). 
-      Recommended size: 128×128 or 64×64 pixels.
-    -->
     <link rel="icon" type="image/png" href="https://i.imgur.com/oOWYzf7.png">
     <style>
         :root {
@@ -19,6 +13,9 @@
             --text-white: #ffffff;
             --text-grey: #a0a0a0;
             --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --success: #4caf50;
+            --danger: #ff4444;
+            --warning: #ff9800;
         }
 
         * {
@@ -28,10 +25,27 @@
             font-family: var(--font-main);
         }
 
+        /* UPGRADE 11: Custom gold scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gold);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b8860b;
+        }
+
         body {
             background-color: var(--bg-dark);
             color: var(--text-white);
             overflow-x: hidden;
+            padding-bottom: 0;
         }
 
         /* --- Navbar --- */
@@ -233,6 +247,54 @@
             color: var(--text-grey);
         }
 
+        /* UPGRADE 7: Best Sellers / Trending Section */
+        .trending-section {
+            padding: 60px 50px 30px;
+            border-bottom: 1px solid #222;
+        }
+
+        .trending-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .trending-title-wrapper p {
+            color: var(--primary-gold);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .trending-title-wrapper h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .trending-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 10px;
+        }
+
+        .trending-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .trending-scroll .product-card {
+            min-width: 240px;
+            flex-shrink: 0;
+        }
+
+        .trending-scroll .product-image {
+            height: 200px;
+        }
+
         /* --- Product Section --- */
         .shop-section {
             padding: 60px 50px;
@@ -289,13 +351,21 @@
             gap: 30px;
         }
 
+        /* UPGRADE 10: Smooth scroll fade-in animation */
         .product-card {
             background-color: var(--bg-card);
             border-radius: 8px;
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.6s ease;
             cursor: pointer;
             position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .product-card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .product-card:hover {
@@ -352,6 +422,74 @@
             color: black;
         }
 
+        /* UPGRADES 1 & 2: Stock badges and New/Sale badges */
+        .badge-container {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+        }
+
+        .badge-new {
+            background-color: var(--primary-gold);
+            color: black;
+        }
+
+        .badge-sale {
+            background-color: var(--danger);
+        }
+
+        .badge-instock {
+            background-color: var(--success);
+        }
+
+        .badge-lowstock {
+            background-color: var(--warning);
+            color: black;
+        }
+
+        .badge-soldout {
+            background-color: #555;
+        }
+
+        .badge-container.right {
+            left: auto;
+            right: 12px;
+        }
+
+        /* Original price strikethrough */
+        .product-price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .product-price {
+            color: var(--primary-gold);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .product-price-original {
+            color: #666;
+            text-decoration: line-through;
+            font-size: 12px;
+        }
+
         /* --- Product Modal --- */
         .modal {
             display: none;
@@ -376,6 +514,7 @@
             display: flex;
             flex-direction: row;
             position: relative;
+            max-height: 90vh;
         }
 
         .modal-close {
@@ -392,9 +531,41 @@
             z-index: 10;
         }
 
-        .modal-image {
+        /* UPGRADE 3: Image gallery layout */
+        .modal-image-section {
             width: 50%;
+            display: flex;
+            flex-direction: column;
+            background-color: #151515;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 380px;
             object-fit: cover;
+            display: block;
+        }
+
+        .thumbnail-row {
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            overflow-x: auto;
+        }
+
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .thumbnail:hover, .thumbnail.active {
+            border-color: var(--primary-gold);
         }
 
         .modal-details {
@@ -403,6 +574,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow-y: auto;
         }
 
         .modal-title {
@@ -421,7 +593,7 @@
         .modal-desc {
             color: var(--text-grey);
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-size: 14px;
         }
 
@@ -450,7 +622,7 @@
         .size-selector {
             display: flex;
             gap: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .size-btn {
@@ -469,6 +641,60 @@
             background-color: var(--primary-gold);
             color: black;
             border-color: var(--primary-gold);
+        }
+
+        /* UPGRADE 4: Quantity selector in modal */
+        .quantity-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .quantity-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-grey);
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .quantity-btn {
+            background: none;
+            border: none;
+            color: var(--text-white);
+            width: 36px;
+            height: 36px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--primary-gold);
+            color: black;
+        }
+
+        .quantity-value {
+            width: 50px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 15px;
+            background-color: #2a2a2a;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* --- Cart Modal --- */
@@ -537,13 +763,49 @@
         .cart-item-meta {
             font-size: 12px;
             color: var(--text-grey);
+            margin-bottom: 8px;
         }
 
         .cart-item-price {
             color: var(--primary-gold);
             font-weight: 700;
             font-size: 14px;
-            margin-top: 4px;
+        }
+
+        /* UPGRADE 14: Quantity controls in cart */
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .cart-qty-btn {
+            width: 26px;
+            height: 26px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: var(--text-white);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .cart-qty-btn:hover {
+            background-color: var(--primary-gold);
+            color: black;
+            border-color: var(--primary-gold);
+        }
+
+        .cart-qty-value {
+            font-size: 13px;
+            font-weight: 700;
+            min-width: 20px;
+            text-align: center;
         }
 
         .cart-item-remove {
@@ -554,24 +816,67 @@
             font-size: 16px;
             padding: 8px;
             transition: color 0.3s;
+            align-self: flex-start;
         }
 
         .cart-item-remove:hover {
             color: #ff6666;
         }
 
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-top: 10px;
-            border-top: 2px solid var(--primary-gold);
-            font-size: 1.2rem;
-            font-weight: 700;
+        /* UPGRADE 17: Delivery fee estimator */
+        .delivery-section {
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
         }
 
-        .cart-total-price {
+        .delivery-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-grey);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .delivery-select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: var(--text-white);
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .delivery-select:focus {
+            border-color: var(--primary-gold);
+        }
+
+        .cart-summary {
+            padding-top: 15px;
+        }
+
+        .cart-summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-grey);
+            margin-bottom: 8px;
+        }
+
+        .cart-summary-row.total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-white);
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 2px solid var(--primary-gold);
+        }
+
+        .cart-summary-row.total .cart-total-price {
             color: var(--primary-gold);
             font-size: 1.5rem;
         }
@@ -579,7 +884,7 @@
         .cart-buy-btn {
             width: 100%;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 20px;
             padding: 18px;
             font-size: 15px;
         }
@@ -745,6 +1050,58 @@
             margin: 0 auto;
         }
 
+        /* UPGRADE 13: Mobile Bottom Navbar */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1a1a1a;
+            border-top: 1px solid #333;
+            z-index: 200;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+        }
+
+        .mobile-bottom-nav .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-grey);
+            text-decoration: none;
+            padding: 8px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .mobile-bottom-nav .nav-item.active,
+        .mobile-bottom-nav .nav-item:hover {
+            color: var(--primary-gold);
+        }
+
+        .mobile-bottom-nav .nav-item i {
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+
+        .mobile-bottom-nav .nav-item span {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mobile-bottom-nav .nav-item .cart-badge {
+            position: absolute;
+            top: 4px;
+            right: calc(50% - 18px);
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+        }
+
         /* --- Responsive --- */
         @media (max-width: 768px) {
             .navbar {
@@ -757,6 +1114,14 @@
 
             .logo img {
                 height: 50px;
+            }
+
+            body {
+                padding-bottom: 70px; /* Space for bottom nav */
+            }
+
+            .mobile-bottom-nav {
+                display: flex;
             }
 
             .hero {
@@ -781,6 +1146,10 @@
                 padding: 30px 20px;
             }
 
+            .trending-section {
+                padding: 40px 20px 20px;
+            }
+
             .shop-section {
                 padding: 40px 20px;
             }
@@ -803,23 +1172,23 @@
                 overflow-y: auto;
             }
 
-            .modal-image, .modal-details {
+            .modal-image-section, .modal-details {
                 width: 100%;
             }
 
             .modal-image {
-                height: 250px;
+                height: 280px;
             }
 
             .toast {
-                bottom: 15px;
+                bottom: 85px;
                 right: 15px;
                 left: 15px;
                 max-width: none;
             }
 
             .search-modal {
-                padding: 80px 20px 30px;
+                padding: 80px 20px 90px;
             }
 
             .search-input {
@@ -864,7 +1233,7 @@
     <header class="hero">
         <p class="hero-subtitle">Premium Headwear</p>
         <h1 class="hero-title">TANGO</h1>
-        <p class="hero-desc">Premium Dota Collection</p>
+        <p class="hero-desc">This is just a warning.</p>
         <div class="hero-buttons">
             <a href="#shop" class="btn btn-primary">Shop Now <i class="fas fa-arrow-right"></i></a>
             <a href="#shop" class="btn btn-outline">View Gallery</a>
@@ -903,6 +1272,17 @@
         </div>
     </div>
 
+    <!-- UPGRADE 7: Trending / Best Sellers Section -->
+    <section class="trending-section">
+        <div class="trending-header">
+            <div class="trending-title-wrapper">
+                <p>Best Sellers</p>
+                <h2>Trending Now</h2>
+            </div>
+        </div>
+        <div class="trending-scroll" id="trending-scroll"></div>
+    </section>
+
     <!-- Shop Section -->
     <section class="shop-section" id="shop">
         <div class="section-header">
@@ -926,7 +1306,13 @@
     <div class="modal" id="product-modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            <img class="modal-image" id="modal-img" src="" alt="Product">
+            
+            <!-- UPGRADE 3: Image Gallery -->
+            <div class="modal-image-section">
+                <img class="modal-image" id="modal-img" src="" alt="Product">
+                <div class="thumbnail-row" id="thumbnail-row"></div>
+            </div>
+
             <div class="modal-details">
                 <h2 class="modal-title" id="modal-title">Classic Black</h2>
                 <div class="modal-price" id="modal-price">₱35.00</div>
@@ -938,6 +1324,16 @@
                     <div class="size-btn active" onclick="selectSize(this)">M</div>
                     <div class="size-btn" onclick="selectSize(this)">L</div>
                     <div class="size-btn" onclick="selectSize(this)">XL</div>
+                </div>
+
+                <!-- UPGRADE 4: Quantity Selector -->
+                <div class="quantity-row">
+                    <span class="quantity-label">Quantity</span>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeModalQty(-1)">−</button>
+                        <div class="quantity-value" id="modalQty">1</div>
+                        <button class="quantity-btn" onclick="changeModalQty(1)">+</button>
+                    </div>
                 </div>
 
                 <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="addToCart()">
@@ -973,6 +1369,27 @@
         <div class="toast-text" id="toastText">Item added to cart</div>
     </div>
 
+    <!-- UPGRADE 13: Mobile Bottom Navbar -->
+    <nav class="mobile-bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#shop" class="nav-item">
+            <i class="fas fa-hat-cowboy"></i>
+            <span>Shop</span>
+        </a>
+        <a href="javascript:void(0)" class="nav-item" onclick="openCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Cart</span>
+            <span class="cart-badge" id="cartBadgeMobile">0</span>
+        </a>
+        <a href="https://m.me/YOUR_PAGE_NAME" target="_blank" class="nav-item">
+            <i class="fab fa-facebook-messenger"></i>
+            <span>Order</span>
+        </a>
+    </nav>
+
     <footer>
         <div class="disclaimer">
             <strong>TANGO HEADWEAR</strong><br>
@@ -988,14 +1405,38 @@
         // ============================================
         const FB_PAGE_NAME = "YOUR_PAGE_NAME";
 
+        // UPGRADE 17: Delivery fees by region
+        const DELIVERY_FEES = {
+            "Metro Manila": 80,
+            "Luzon (Outside NCR)": 150,
+            "Visayas": 200,
+            "Mindanao": 220,
+            "Pickup (Free)": 0
+        };
+
         // --- Product Data ---
+        // New fields: 
+        //   images: array of image URLs (UPGRADE 3)
+        //   stock: number (UPGRADE 1)
+        //   isNew: boolean (UPGRADE 2)
+        //   originalPrice: number or null (UPGRADE 2 - for sale)
+        //   trending: boolean (UPGRADE 7)
         const products = [
             {
                 id: 1,
                 name: "Classic Black",
                 category: "snapback",
                 price: 35.00,
+                originalPrice: 45.00,
+                stock: 15,
+                isNew: false,
+                trending: true,
                 image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop",
+                images: [
+                    "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1534215754734-18e55d13e346?q=80&w=2004&auto=format&fit=crop"
+                ],
                 desc: "The essential black snapback. Features a high-profile structure and the signature Tango embroidery."
             },
             {
@@ -1003,7 +1444,15 @@
                 name: "Tango Cap Version #1",
                 category: "snapback",
                 price: 999.00,
+                originalPrice: null,
+                stock: 3,
+                isNew: true,
+                trending: true,
                 image: "https://i.imgur.com/V2v90z1.jpeg",
+                images: [
+                    "https://i.imgur.com/V2v90z1.jpeg",
+                    "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop"
+                ],
                 desc: `<ul class="spec-list">
                     <li>A frame Baseball Cap</li>
                     <li>Cotton fabric</li>
@@ -1020,7 +1469,14 @@
                 name: "Stealth Edition",
                 category: "trucker",
                 price: 38.00,
+                originalPrice: null,
+                stock: 0,
+                isNew: false,
+                trending: false,
                 image: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?q=80&w=2070&auto=format&fit=crop",
+                images: [
+                    "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?q=80&w=2070&auto=format&fit=crop"
+                ],
                 desc: "Black on black trucker cap. Breathable mesh back with a premium front panel."
             },
             {
@@ -1028,7 +1484,15 @@
                 name: "Olive Green",
                 category: "snapback",
                 price: 35.00,
+                originalPrice: null,
+                stock: 12,
+                isNew: true,
+                trending: true,
                 image: "https://images.unsplash.com/photo-1534215754734-18e55d13e346?q=80&w=2004&auto=format&fit=crop",
+                images: [
+                    "https://images.unsplash.com/photo-1534215754734-18e55d13e346?q=80&w=2004&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop"
+                ],
                 desc: "Military-inspired olive green snapback. Rugged and stylish."
             },
             {
@@ -1036,7 +1500,14 @@
                 name: "Red Limited",
                 category: "limited",
                 price: 45.00,
+                originalPrice: 60.00,
+                stock: 2,
+                isNew: false,
+                trending: false,
                 image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop",
+                images: [
+                    "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop"
+                ],
                 desc: "Limited edition red cap. Only 100 pieces made worldwide."
             },
             {
@@ -1044,7 +1515,14 @@
                 name: "Navy Blue",
                 category: "dad",
                 price: 32.00,
+                originalPrice: null,
+                stock: 18,
+                isNew: false,
+                trending: true,
                 image: "https://images.unsplash.com/photo-1533055640609-24b498dfd74c?q=80&w=1974&auto=format&fit=crop",
+                images: [
+                    "https://images.unsplash.com/photo-1533055640609-24b498dfd74c?q=80&w=1974&auto=format&fit=crop"
+                ],
                 desc: "Classic navy blue dad cap. Soft cotton twill for maximum comfort."
             },
             {
@@ -1052,7 +1530,14 @@
                 name: "Camo Style",
                 category: "trucker",
                 price: 38.00,
+                originalPrice: null,
+                stock: 8,
+                isNew: false,
+                trending: false,
                 image: "https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop",
+                images: [
+                    "https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop"
+                ],
                 desc: "Camouflage trucker cap for the outdoor enthusiast."
             },
             {
@@ -1060,15 +1545,43 @@
                 name: "White Clean",
                 category: "snapback",
                 price: 35.00,
+                originalPrice: null,
+                stock: 14,
+                isNew: false,
+                trending: false,
                 image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop",
+                images: [
+                    "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop"
+                ],
                 desc: "Crisp white snapback. A clean look for any outfit."
             }
         ];
 
-        // --- Cart State ---
+        // --- State ---
         let cart = JSON.parse(localStorage.getItem('tangoCart') || '[]');
         let currentProduct = null;
         let currentSize = 'M';
+        let currentQty = 1;
+        let selectedDelivery = "Metro Manila";
+
+        // --- Helpers ---
+        function getStockBadge(stock) {
+            if (stock === 0) return { class: 'badge-soldout', text: 'Sold Out' };
+            if (stock <= 3) return { class: 'badge-lowstock', text: `Low Stock (${stock} left)` };
+            return { class: 'badge-instock', text: 'In Stock' };
+        }
+
+        function buildBadgeHTML(product) {
+            let html = '<div class="badge-container">';
+            if (product.isNew) html += '<span class="badge badge-new">New</span>';
+            if (product.originalPrice) html += '<span class="badge badge-sale">Sale</span>';
+            html += '</div>';
+
+            // Stock badge on the right side
+            const stock = getStockBadge(product.stock);
+            html += `<div class="badge-container right"><span class="badge ${stock.class}">${stock.text}</span></div>`;
+            return html;
+        }
 
         // --- Render Products ---
         const grid = document.getElementById('product-grid');
@@ -1081,43 +1594,109 @@
                 : products.filter(p => p.category === filter);
 
             filteredProducts.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.onclick = () => openModal(product);
-                
-                card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <div class="product-info">
-                        <div class="product-category">${product.category}</div>
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-action"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                `;
+                const card = createProductCard(product);
                 grid.appendChild(card);
+            });
+
+            // UPGRADE 10: Trigger fade-in animations
+            setTimeout(observeCards, 50);
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.onclick = () => openModal(product);
+            
+            const priceHtml = product.originalPrice
+                ? `<div class="product-price-row">
+                     <span class="product-price">₱${product.price.toFixed(2)}</span>
+                     <span class="product-price-original">₱${product.originalPrice.toFixed(2)}</span>
+                   </div>`
+                : `<div class="product-price-row">
+                     <span class="product-price">₱${product.price.toFixed(2)}</span>
+                   </div>`;
+
+            card.innerHTML = `
+                ${buildBadgeHTML(product)}
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-info">
+                    <div class="product-category">${product.category}</div>
+                    <div class="product-name">${product.name}</div>
+                    ${priceHtml}
+                    <div class="product-action"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            `;
+            return card;
+        }
+
+        // UPGRADE 7: Render Trending Section
+        function renderTrending() {
+            const container = document.getElementById('trending-scroll');
+            const trendingItems = products.filter(p => p.trending);
+            trendingItems.forEach(product => {
+                container.appendChild(createProductCard(product));
             });
         }
 
-        // --- Filter Logic ---
-        function filterProducts(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
+        // UPGRADE 10: Fade-in on scroll
+        let observer;
+        function observeCards() {
+            if (observer) observer.disconnect();
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.product-card').forEach((card, i) => {
+                setTimeout(() => observer.observe(card), i * 40);
             });
+        }
+
+        // --- Filter ---
+        function filterProducts(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             renderProducts(category);
         }
 
-        // --- Product Modal Logic ---
+        // --- Product Modal ---
         const modal = document.getElementById('product-modal');
 
         function openModal(product) {
             currentProduct = product;
             currentSize = 'M';
-            
-            document.getElementById('modal-img').src = product.image;
+            currentQty = 1;
+
             document.getElementById('modal-title').textContent = product.name;
             document.getElementById('modal-price').textContent = `₱${product.price.toFixed(2)}`;
             document.getElementById('modal-desc').innerHTML = product.desc;
+            document.getElementById('modalQty').textContent = '1';
 
+            // UPGRADE 3: Load main image + thumbnails
+            const images = product.images || [product.image];
+            document.getElementById('modal-img').src = images[0];
+
+            const thumbRow = document.getElementById('thumbnail-row');
+            thumbRow.innerHTML = '';
+            if (images.length > 1) {
+                images.forEach((imgUrl, index) => {
+                    const thumb = document.createElement('img');
+                    thumb.src = imgUrl;
+                    thumb.className = 'thumbnail' + (index === 0 ? ' active' : '');
+                    thumb.onclick = () => {
+                        document.getElementById('modal-img').src = imgUrl;
+                        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                        thumb.classList.add('active');
+                    };
+                    thumbRow.appendChild(thumb);
+                });
+            }
+
+            // Reset size selector
             document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.size-btn')[1].classList.add('active');
 
@@ -1134,16 +1713,31 @@
             currentSize = element.textContent.trim();
         }
 
+        // UPGRADE 4: Quantity in modal
+        function changeModalQty(delta) {
+            if (!currentProduct) return;
+            const newQty = currentQty + delta;
+            if (newQty < 1) return;
+            if (newQty > currentProduct.stock) return;
+            currentQty = newQty;
+            document.getElementById('modalQty').textContent = currentQty;
+        }
+
         // --- Add to Cart ---
         function addToCart() {
             if (!currentProduct) return;
+
+            if (currentProduct.stock === 0) {
+                showToast('Sorry, this cap is sold out');
+                return;
+            }
 
             const existingIndex = cart.findIndex(
                 item => item.id === currentProduct.id && item.size === currentSize
             );
 
             if (existingIndex !== -1) {
-                cart[existingIndex].quantity += 1;
+                cart[existingIndex].quantity += currentQty;
             } else {
                 cart.push({
                     id: currentProduct.id,
@@ -1151,13 +1745,13 @@
                     price: currentProduct.price,
                     image: currentProduct.image,
                     size: currentSize,
-                    quantity: 1
+                    quantity: currentQty
                 });
             }
 
             saveCart();
             updateCartBadge();
-            showToast(`${currentProduct.name} (Size ${currentSize}) added to cart`);
+            showToast(`${currentQty}x ${currentProduct.name} (Size ${currentSize}) added to cart`);
             closeModal();
         }
 
@@ -1166,30 +1760,32 @@
         }
 
         function updateCartBadge() {
-            const badge = document.getElementById('cartBadge');
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            const badge = document.getElementById('cartBadge');
+            const badgeMobile = document.getElementById('cartBadgeMobile');
             
             if (totalItems > 0) {
                 badge.textContent = totalItems;
                 badge.classList.add('show');
+                if (badgeMobile) {
+                    badgeMobile.textContent = totalItems;
+                    badgeMobile.classList.add('show');
+                }
             } else {
                 badge.classList.remove('show');
+                if (badgeMobile) badgeMobile.classList.remove('show');
             }
         }
 
-        // --- Toast Notification ---
+        // --- Toast ---
         let toastTimeout;
-
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toastText').textContent = message;
-            
             toast.classList.add('show');
-            
             clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         // --- Cart Modal ---
@@ -1218,19 +1814,25 @@
             }
 
             let itemsHtml = '';
-            let total = 0;
+            let subtotal = 0;
 
             cart.forEach((item, index) => {
-                const subtotal = item.price * item.quantity;
-                total += subtotal;
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
 
                 itemsHtml += `
                     <div class="cart-item">
                         <img src="${item.image}" alt="${item.name}" class="cart-item-img">
                         <div class="cart-item-info">
                             <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-meta">Size: ${item.size} &nbsp;|&nbsp; Qty: ${item.quantity}</div>
-                            <div class="cart-item-price">₱${subtotal.toFixed(2)}</div>
+                            <div class="cart-item-meta">Size: ${item.size}</div>
+                            <div class="cart-item-price">₱${itemTotal.toFixed(2)}</div>
+                            <!-- UPGRADE 14: Cart quantity controls -->
+                            <div class="cart-item-controls">
+                                <button class="cart-qty-btn" onclick="changeCartQty(${index}, -1)">−</button>
+                                <span class="cart-qty-value">${item.quantity}</span>
+                                <button class="cart-qty-btn" onclick="changeCartQty(${index}, 1)">+</button>
+                            </div>
                         </div>
                         <button class="cart-item-remove" onclick="removeFromCart(${index})">
                             <i class="fas fa-trash-alt"></i>
@@ -1239,17 +1841,58 @@
                 `;
             });
 
+            // UPGRADE 17: Delivery fee calculator
+            const deliveryFee = DELIVERY_FEES[selectedDelivery] || 0;
+            const grandTotal = subtotal + deliveryFee;
+
             itemsHtml += `
-                <div class="cart-total">
-                    <span>Total</span>
-                    <span class="cart-total-price">₱${total.toFixed(2)}</span>
+                <div class="delivery-section">
+                    <label class="delivery-label">Delivery Region</label>
+                    <select class="delivery-select" id="deliverySelect" onchange="changeDelivery(this.value)">
+                        ${Object.keys(DELIVERY_FEES).map(region => 
+                            `<option value="${region}" ${region === selectedDelivery ? 'selected' : ''}>
+                                ${region} ${DELIVERY_FEES[region] > 0 ? '— ₱' + DELIVERY_FEES[region] : '— Free'}
+                            </option>`
+                        ).join('')}
+                    </select>
                 </div>
+
+                <div class="cart-summary">
+                    <div class="cart-summary-row">
+                        <span>Subtotal</span>
+                        <span>₱${subtotal.toFixed(2)}</span>
+                    </div>
+                    <div class="cart-summary-row">
+                        <span>Delivery Fee</span>
+                        <span>₱${deliveryFee.toFixed(2)}</span>
+                    </div>
+                    <div class="cart-summary-row total">
+                        <span>Total</span>
+                        <span class="cart-total-price">₱${grandTotal.toFixed(2)}</span>
+                    </div>
+                </div>
+
                 <button class="btn btn-primary cart-buy-btn" onclick="buyNow()">
                     Buy Now <i class="fab fa-facebook-messenger"></i>
                 </button>
             `;
 
             container.innerHTML = itemsHtml;
+        }
+
+        // UPGRADE 14: Adjust quantity in cart
+        function changeCartQty(index, delta) {
+            const newQty = cart[index].quantity + delta;
+            if (newQty < 1) return;
+            const product = products.find(p => p.id === cart[index].id);
+            if (product && newQty > product.stock) {
+                showToast('Not enough stock available');
+                return;
+            }
+            cart[index].quantity = newQty;
+            saveCart();
+            updateCartBadge();
+            renderCart();
         }
 
         function removeFromCart(index) {
@@ -1259,7 +1902,13 @@
             renderCart();
         }
 
-        // --- Buy Now: Redirect to Messenger with Pre-filled Message ---
+        // UPGRADE 17: Change delivery region
+        function changeDelivery(region) {
+            selectedDelivery = region;
+            renderCart();
+        }
+
+        // --- Buy Now ---
         function buyNow() {
             if (cart.length === 0) return;
 
@@ -1269,8 +1918,13 @@
                 message += `• ${item.name} (Size ${item.size}) x${item.quantity} — ₱${(item.price * item.quantity).toFixed(2)}\n`;
             });
 
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            message += `\nTotal: ₱${total.toFixed(2)}\n\n`;
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = DELIVERY_FEES[selectedDelivery] || 0;
+            const total = subtotal + deliveryFee;
+
+            message += `\nSubtotal: ₱${subtotal.toFixed(2)}\n`;
+            message += `Delivery (${selectedDelivery}): ₱${deliveryFee.toFixed(2)}\n`;
+            message += `Total: ₱${total.toFixed(2)}\n\n`;
             message += "Please confirm availability and payment details. Thank you!";
 
             const encodedMessage = encodeURIComponent(message);
@@ -1279,7 +1933,7 @@
             window.open(messengerUrl, '_blank');
         }
 
-        // --- Search Functionality ---
+        // --- Search ---
         const searchModal = document.getElementById('search-modal');
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
@@ -1339,31 +1993,27 @@
             });
         }
 
-        // --- Navbar Scroll Effect ---
+        // --- Navbar Scroll ---
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
         });
 
-        // --- Close modals when clicking outside ---
+        // --- Close on outside click ---
         window.onclick = function(event) {
             if (event.target == modal) closeModal();
             if (event.target == cartModal) closeCart();
         }
 
-        // Close search with Escape key
+        // --- Escape key ---
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && searchModal.style.display === 'block') {
-                closeSearch();
-            }
+            if (e.key === 'Escape' && searchModal.style.display === 'block') closeSearch();
         });
 
         // --- Initialize ---
         renderProducts();
+        renderTrending();
         updateCartBadge();
     </script>
 </body>
