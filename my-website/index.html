@@ -36,7 +36,7 @@
             overflow-x: hidden;
         }
 
-        /* Navbar */
+        /* --- Navbar --- */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -110,7 +110,7 @@
 
         .cart-badge.show { display: flex; }
 
-        /* Hero */
+        /* --- Hero --- */
         .hero {
             height: 85vh;
             background-image: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 100%), url('https://i.imgur.com/FPwPuOb.jpeg');
@@ -171,7 +171,7 @@
 
         .btn-outline:hover { background-color: var(--primary-gold); color: black; }
 
-        /* Features */
+        /* --- Features --- */
         .features-bar {
             background-color: #1a1a1a;
             padding: 30px 50px;
@@ -185,7 +185,7 @@
         .feature-text h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
         .feature-text p { font-size: 11px; color: var(--text-grey); }
 
-        /* Trending */
+        /* --- Trending --- */
         .trending-section { padding: 60px 50px 30px; border-bottom: 1px solid #222; }
         .trending-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; }
         .trending-title-wrapper p { color: var(--primary-gold); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
@@ -203,7 +203,7 @@
         .trending-scroll .product-card { min-width: 240px; flex-shrink: 0; }
         .trending-scroll .product-image { height: 200px; }
 
-        /* Shop */
+        /* --- Shop --- */
         .shop-section { padding: 60px 50px; }
         .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
         .section-title-wrapper p { color: var(--primary-gold); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
@@ -223,7 +223,7 @@
 
         .filter-btn.active, .filter-btn:hover { background: var(--primary-gold); color: black; border-color: var(--primary-gold); }
 
-        /* Product Grid */
+        /* --- Product Grid --- */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -305,7 +305,20 @@
         .product-price { color: var(--primary-gold); font-weight: 700; font-size: 14px; }
         .product-price-original { color: #666; text-decoration: line-through; font-size: 12px; }
 
-        /* Product Modal */
+        /* Loading skeleton */
+        .skeleton-card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            height: 380px;
+            animation: skeletonPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes skeletonPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+
+        /* --- Product Modal --- */
         .modal {
             display: none;
             position: fixed;
@@ -447,7 +460,7 @@
             justify-content: center;
         }
 
-        /* Cart Modal */
+        /* --- Cart Modal --- */
         .cart-modal-content {
             background-color: var(--bg-card);
             width: 100%;
@@ -608,7 +621,7 @@
 
         .cart-buy-btn { width: 100%; justify-content: center; margin-top: 20px; padding: 18px; font-size: 15px; }
 
-        /* Search */
+        /* --- Search --- */
         .search-modal {
             display: none;
             position: fixed;
@@ -677,34 +690,7 @@
             grid-column: 1 / -1;
         }
 
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--bg-card);
-            color: var(--text-white);
-            padding: 18px 24px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-gold);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 2000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s ease;
-            max-width: 320px;
-        }
-
-        .toast.show { transform: translateY(0); opacity: 1; }
-        .toast i { color: var(--primary-gold); font-size: 20px; flex-shrink: 0; }
-        .toast-text { font-size: 14px; line-height: 1.3; }
-
-        /* ============================================
-           NEW: International Reminder Pop-Up
-           ============================================ */
+        /* --- Info Pop-Up --- */
         .info-popup {
             display: none;
             position: fixed;
@@ -720,19 +706,10 @@
             animation: fadeInOverlay 0.2s ease;
         }
 
-        .info-popup.show {
-            display: flex;
-        }
+        .info-popup.show { display: flex; }
 
-        @keyframes fadeInOverlay {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.85); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
         .info-popup-content {
             background-color: var(--bg-card);
@@ -758,40 +735,38 @@
             margin: 0 auto 20px;
         }
 
-        .info-popup-icon i {
-            font-size: 28px;
-            color: var(--primary-gold);
-        }
+        .info-popup-icon i { font-size: 28px; color: var(--primary-gold); }
+        .info-popup-title { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; color: var(--text-white); }
+        .info-popup-message { font-size: 14px; line-height: 1.6; color: #ccc; margin-bottom: 25px; }
+        .info-popup-message strong { color: var(--primary-gold); font-weight: 700; }
+        .info-popup-btn { width: 100%; justify-content: center; padding: 14px; font-size: 14px; }
 
-        .info-popup-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
+        /* --- Toast --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--bg-card);
             color: var(--text-white);
+            padding: 18px 24px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 2000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            max-width: 320px;
         }
 
-        .info-popup-message {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #ccc;
-            margin-bottom: 25px;
-        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--primary-gold); font-size: 20px; flex-shrink: 0; }
+        .toast-text { font-size: 14px; line-height: 1.3; }
 
-        .info-popup-message strong {
-            color: var(--primary-gold);
-            font-weight: 700;
-        }
-
-        .info-popup-btn {
-            width: 100%;
-            justify-content: center;
-            padding: 14px;
-            font-size: 14px;
-        }
-
-        /* Footer */
+        /* --- Footer --- */
         footer {
             background-color: black;
             padding: 50px;
@@ -802,7 +777,7 @@
 
         .disclaimer { color: #666; font-size: 12px; max-width: 800px; margin: 0 auto; }
 
-        /* Mobile Bottom Nav */
+        /* --- Mobile Bottom Nav --- */
         .mobile-bottom-nav {
             display: none;
             position: fixed;
@@ -1012,7 +987,6 @@
         </div>
     </div>
 
-    <!-- NEW: International Shipping Reminder Pop-Up -->
     <div class="info-popup" id="international-popup">
         <div class="info-popup-content">
             <div class="info-popup-icon">
@@ -1064,9 +1038,22 @@
         </div>
     </footer>
 
+    <!-- Sanity CDN Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@sanity/client@6/umd/sanity-client.min.js"></script>
+
     <script>
+        // ============================================
+        // SANITY CONFIGURATION
+        // ============================================
+        const SANITY_PROJECT_ID = 'exdwsr3t';
+        const SANITY_DATASET = 'production';
+
+        // ============================================
+        // ⚠️ CHANGE THIS TO YOUR FACEBOOK PAGE NAME ⚠️
+        // ============================================
         const FB_PAGE_NAME = "YOUR_PAGE_NAME";
 
+        // Delivery fees by region
         const DELIVERY_FEES = {
             "Metro Manila": 80,
             "Luzon (Outside NCR)": 150,
@@ -1083,9 +1070,10 @@
             { id: "cod", name: "Cash on Delivery" }
         ];
 
-        const products = [
+        // Fallback products (shown if Sanity is unavailable)
+        const fallbackProducts = [
             {
-                id: 1,
+                id: "1",
                 name: "Classic Black",
                 category: "snapback",
                 price: 35.00,
@@ -1094,27 +1082,19 @@
                 isNew: false,
                 trending: true,
                 image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop",
-                images: [
-                    "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1534215754734-18e55d13e346?q=80&w=2004&auto=format&fit=crop"
-                ],
-                desc: "The essential black snapback. Features a high-profile structure and the signature Tango embroidery."
+                images: ["https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop"],
+                desc: "The essential black snapback."
             },
             {
-                id: 2,
+                id: "2",
                 name: "Tango Cap Version #1",
                 category: "snapback",
                 price: 999.00,
-                originalPrice: null,
                 stock: 3,
                 isNew: true,
                 trending: true,
                 image: "https://i.imgur.com/V2v90z1.jpeg",
-                images: [
-                    "https://i.imgur.com/V2v90z1.jpeg",
-                    "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop"
-                ],
+                images: ["https://i.imgur.com/V2v90z1.jpeg"],
                 desc: `<ul class="spec-list">
                     <li>A frame Baseball Cap</li>
                     <li>Cotton fabric</li>
@@ -1125,96 +1105,78 @@
                     <li>Snap back adjuster (moss green)</li>
                     <li>Underlining print (off white stitches and black print)</li>
                 </ul>`
-            },
-            {
-                id: 3,
-                name: "Stealth Edition",
-                category: "trucker",
-                price: 38.00,
-                originalPrice: null,
-                stock: 0,
-                isNew: false,
-                trending: false,
-                image: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?q=80&w=2070&auto=format&fit=crop",
-                images: ["https://images.unsplash.com/photo-1556306535-0f09a537f0a3?q=80&w=2070&auto=format&fit=crop"],
-                desc: "Black on black trucker cap. Breathable mesh back with a premium front panel."
-            },
-            {
-                id: 4,
-                name: "Olive Green",
-                category: "snapback",
-                price: 35.00,
-                originalPrice: null,
-                stock: 12,
-                isNew: true,
-                trending: true,
-                image: "https://images.unsplash.com/photo-1534215754734-18e55d13e346?q=80&w=2004&auto=format&fit=crop",
-                images: [
-                    "https://images.unsplash.com/photo-1534215754734-18e55d13e346?q=80&w=2004&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop"
-                ],
-                desc: "Military-inspired olive green snapback. Rugged and stylish."
-            },
-            {
-                id: 5,
-                name: "Red Limited",
-                category: "limited",
-                price: 45.00,
-                originalPrice: 60.00,
-                stock: 2,
-                isNew: false,
-                trending: false,
-                image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop",
-                images: ["https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=2070&auto=format&fit=crop"],
-                desc: "Limited edition red cap. Only 100 pieces made worldwide."
-            },
-            {
-                id: 6,
-                name: "Navy Blue",
-                category: "dad",
-                price: 32.00,
-                originalPrice: null,
-                stock: 18,
-                isNew: false,
-                trending: true,
-                image: "https://images.unsplash.com/photo-1533055640609-24b498dfd74c?q=80&w=1974&auto=format&fit=crop",
-                images: ["https://images.unsplash.com/photo-1533055640609-24b498dfd74c?q=80&w=1974&auto=format&fit=crop"],
-                desc: "Classic navy blue dad cap. Soft cotton twill for maximum comfort."
-            },
-            {
-                id: 7,
-                name: "Camo Style",
-                category: "trucker",
-                price: 38.00,
-                originalPrice: null,
-                stock: 8,
-                isNew: false,
-                trending: false,
-                image: "https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop",
-                images: ["https://images.unsplash.com/photo-1572307480813-ceb0e15d832d?q=80&w=2035&auto=format&fit=crop"],
-                desc: "Camouflage trucker cap for the outdoor enthusiast."
-            },
-            {
-                id: 8,
-                name: "White Clean",
-                category: "snapback",
-                price: 35.00,
-                originalPrice: null,
-                stock: 14,
-                isNew: false,
-                trending: false,
-                image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop",
-                images: ["https://images.unsplash.com/photo-1588850561407-ed78c282e89d?q=80&w=1936&auto=format&fit=crop"],
-                desc: "Crisp white snapback. A clean look for any outfit."
             }
         ];
 
+        let products = [];
         let cart = JSON.parse(localStorage.getItem('tangoCart') || '[]');
         let currentProduct = null;
         let currentSize = 'M';
         let currentQty = 1;
         let selectedDelivery = localStorage.getItem('tangoDelivery') || "Metro Manila";
         let selectedPayment = localStorage.getItem('tangoPayment') || "gcash";
+
+        // --- Initialize Sanity Client ---
+        const sanityClient = sanityClient({
+            projectId: SANITY_PROJECT_ID,
+            dataset: SANITY_DATASET,
+            apiVersion: '2024-01-01',
+            useCdn: true
+        });
+
+        // --- Load Products from Sanity ---
+        async function loadProducts() {
+            const grid = document.getElementById('product-grid');
+            const trendingScroll = document.getElementById('trending-scroll');
+
+            // Show skeleton loaders
+            grid.innerHTML = Array(6).fill('<div class="skeleton-card"></div>').join('');
+            trendingScroll.innerHTML = Array(4).fill('<div class="skeleton-card" style="min-width:240px;height:280px;"></div>').join('');
+
+            try {
+                const query = `*[_type == "product"] | order(_createdAt desc) {
+                    "id": _id,
+                    name,
+                    price,
+                    originalPrice,
+                    category,
+                    description,
+                    "image": image.asset->url,
+                    "images": gallery[].asset->url,
+                    stock,
+                    isNew,
+                    trending
+                }`;
+
+                const sanityProducts = await sanityClient.fetch(query);
+
+                // Map Sanity fields to match our shop's expected format
+                products = sanityProducts.map(p => ({
+                    id: p.id,
+                    name: p.name || 'Untitled',
+                    category: p.category || 'snapback',
+                    price: p.price || 0,
+                    originalPrice: p.originalPrice || null,
+                    stock: p.stock ?? 99,
+                    isNew: p.isNew || false,
+                    trending: p.trending || false,
+                    image: p.image || 'https://i.imgur.com/V2v90z1.jpeg',
+                    images: p.images && p.images.length > 0 ? p.images : [p.image],
+                    desc: p.description || 'Premium quality cap.'
+                }));
+
+                if (products.length === 0) {
+                    console.warn('No products found in Sanity. Using fallback.');
+                    products = fallbackProducts;
+                }
+            } catch (err) {
+                console.error('Sanity fetch failed:', err);
+                products = fallbackProducts;
+            }
+
+            renderProducts();
+            renderTrending();
+        }
 
         function getStockBadge(stock) {
             if (stock === 0) return { class: 'badge-soldout', text: 'Sold Out' };
@@ -1274,10 +1236,18 @@
 
         function renderTrending() {
             const container = document.getElementById('trending-scroll');
+            container.innerHTML = '';
             const trendingItems = products.filter(p => p.trending);
-            trendingItems.forEach(product => {
-                container.appendChild(createProductCard(product));
-            });
+            if (trendingItems.length === 0) {
+                // If no trending items, show first 4
+                products.slice(0, 4).forEach(product => {
+                    container.appendChild(createProductCard(product));
+                });
+            } else {
+                trendingItems.forEach(product => {
+                    container.appendChild(createProductCard(product));
+                });
+            }
         }
 
         let observer;
@@ -1543,13 +1513,11 @@
             renderCart();
         }
 
-        // UPDATED: Show international pop-up when "International" is selected
         function changeDelivery(region) {
             const wasAlreadyInternational = selectedDelivery === "International";
             selectedDelivery = region;
             localStorage.setItem('tangoDelivery', region);
             
-            // Show the pop-up only when switching TO International
             if (region === "International" && !wasAlreadyInternational) {
                 showInternationalPopup();
             }
@@ -1557,12 +1525,10 @@
             renderCart();
         }
 
-        // NEW: Show the international shipping reminder pop-up
         function showInternationalPopup() {
             document.getElementById('international-popup').classList.add('show');
         }
 
-        // NEW: Close the international shipping reminder pop-up
         function closeInternationalPopup() {
             document.getElementById('international-popup').classList.remove('show');
         }
@@ -1672,7 +1638,6 @@
         window.onclick = function(event) {
             if (event.target == modal) closeModal();
             if (event.target == cartModal) closeCart();
-            // Close international popup when clicking on the dark background
             if (event.target == document.getElementById('international-popup')) {
                 closeInternationalPopup();
             }
@@ -1687,8 +1652,8 @@
             }
         });
 
-        renderProducts();
-        renderTrending();
+        // --- Boot ---
+        loadProducts();
         updateCartBadge();
     </script>
 </body>
