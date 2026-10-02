@@ -45,7 +45,6 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        /* --- Logo Styles --- */
         .logo {
             display: flex;
             align-items: center;
@@ -95,7 +94,6 @@
             color: var(--primary-gold);
         }
 
-        /* Cart Counter Badge */
         .cart-badge {
             position: absolute;
             top: -8px;
@@ -413,10 +411,34 @@
             margin-bottom: 20px;
         }
 
+        /* NEW: Spec list styling for product details */
         .modal-desc {
             color: var(--text-grey);
             line-height: 1.6;
             margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .modal-desc .spec-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-desc .spec-list li {
+            padding: 4px 0;
+            position: relative;
+            padding-left: 18px;
+            color: #ccc;
+        }
+
+        .modal-desc .spec-list li::before {
+            content: '▸';
+            color: var(--primary-gold);
+            position: absolute;
+            left: 0;
+            font-size: 12px;
+            top: 5px;
         }
 
         .size-selector {
@@ -777,7 +799,7 @@
             <div class="modal-details">
                 <h2 class="modal-title" id="modal-title">Classic Black</h2>
                 <div class="modal-price" id="modal-price">₱35.00</div>
-                <p class="modal-desc" id="modal-desc">Premium quality cap with embroidered logo.</p>
+                <div class="modal-desc" id="modal-desc">Premium quality cap with embroidered logo.</div>
                 
                 <h4 style="margin-bottom: 10px; font-size: 12px; text-transform: uppercase;">Select Size</h4>
                 <div class="size-selector">
@@ -840,7 +862,16 @@
                 category: "snapback",
                 price: 999.00,
                 image: "https://i.imgur.com/V2v90z1.jpeg",
-                desc: "A relaxed, unstructured cap. Perfect for everyday wear."
+                desc: `<ul class="spec-list">
+                    <li>A frame Baseball Cap</li>
+                    <li>Cotton fabric</li>
+                    <li>Embroidery logo</li>
+                    <li>Flat visor (moss green)</li>
+                    <li>Eyelets (moss green)</li>
+                    <li>Buttons (moss green)</li>
+                    <li>Snap back adjuster (moss green)</li>
+                    <li>Underlining print (off white stitches and black print)</li>
+                </ul>`
             },
             {
                 id: 3,
@@ -943,7 +974,8 @@
             document.getElementById('modal-img').src = product.image;
             document.getElementById('modal-title').textContent = product.name;
             document.getElementById('modal-price').textContent = `₱${product.price.toFixed(2)}`;
-            document.getElementById('modal-desc').textContent = product.desc;
+            // CHANGED: Use innerHTML so the spec list renders as HTML
+            document.getElementById('modal-desc').innerHTML = product.desc;
 
             document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.size-btn')[1].classList.add('active');
