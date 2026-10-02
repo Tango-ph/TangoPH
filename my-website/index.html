@@ -401,26 +401,6 @@
         .modal-desc .spec-list li { padding: 4px 0; position: relative; padding-left: 18px; color: #ccc; }
         .modal-desc .spec-list li::before { content: '▸'; color: var(--primary-gold); position: absolute; left: 0; font-size: 12px; top: 5px; }
 
-        .size-selector { display: flex; gap: 10px; margin-bottom: 20px; }
-
-        .size-btn {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #444;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .size-btn:hover, .size-btn.active {
-            background-color: var(--primary-gold);
-            color: black;
-            border-color: var(--primary-gold);
-        }
-
         .quantity-row { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
         .quantity-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-grey); }
 
@@ -947,13 +927,6 @@
                 <h2 class="modal-title" id="modal-title">Classic Black</h2>
                 <div class="modal-price" id="modal-price">₱35.00</div>
                 <div class="modal-desc" id="modal-desc">Premium quality cap with embroidered logo.</div>
-                <h4 style="margin-bottom: 10px; font-size: 12px; text-transform: uppercase;">Select Size</h4>
-                <div class="size-selector">
-                    <div class="size-btn" onclick="selectSize(this)">S</div>
-                    <div class="size-btn active" onclick="selectSize(this)">M</div>
-                    <div class="size-btn" onclick="selectSize(this)">L</div>
-                    <div class="size-btn" onclick="selectSize(this)">XL</div>
-                </div>
                 <div class="quantity-row">
                     <span class="quantity-label">Quantity</span>
                     <div class="quantity-controls">
@@ -1068,19 +1041,16 @@
             { id: "cod", name: "Cash on Delivery" }
         ];
 
-        // Fallback products (empty — Sanity is the source of truth)
         const fallbackProducts = [];
 
         let products = [];
         let cart = JSON.parse(localStorage.getItem('tangoCart') || '[]');
         let currentProduct = null;
-        let currentSize = 'M';
         let currentQty = 1;
         let selectedDelivery = localStorage.getItem('tangoDelivery') || "Metro Manila";
         let selectedPayment = localStorage.getItem('tangoPayment') || "gcash";
 
         // --- Load Products directly from Sanity's HTTP API ---
-        // No external library needed. Uses plain fetch().
         async function fetchSanityProducts() {
             const query = `*[_type == "product"] | order(_createdAt desc) {
                 "id": _id,
@@ -1110,14 +1080,12 @@
             const grid = document.getElementById('product-grid');
             const trendingScroll = document.getElementById('trending-scroll');
 
-            // Show skeleton loaders
             grid.innerHTML = Array(6).fill('<div class="skeleton-card"></div>').join('');
             trendingScroll.innerHTML = Array(4).fill('<div class="skeleton-card" style="min-width:240px;height:280px;"></div>').join('');
 
             try {
                 const sanityProducts = await fetchSanityProducts();
 
-                // Map Sanity fields to match our shop's expected format
                 products = sanityProducts.map(p => ({
                     id: p.id,
                     name: p.name || 'Untitled',
@@ -1241,7 +1209,6 @@
 
         function openModal(product) {
             currentProduct = product;
-            currentSize = 'M';
             currentQty = 1;
 
             document.getElementById('modal-title').textContent = product.name;
@@ -1268,19 +1235,10 @@
                 });
             }
 
-            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.size-btn')[1].classList.add('active');
-
             modal.style.display = 'flex';
         }
 
         function closeModal() { modal.style.display = 'none'; }
-
-        function selectSize(element) {
-            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-            currentSize = element.textContent.trim();
-        }
 
         function changeModalQty(delta) {
             if (!currentProduct) return;
@@ -1298,9 +1256,7 @@
                 return;
             }
 
-            const existingIndex = cart.findIndex(
-                item => item.id === currentProduct.id && item.size === currentSize
-            );
+            const existingIndex = cart.findIndex(item => item.id === currentProduct.id);
 
             if (existingIndex !== -1) {
                 cart[existingIndex].quantity += currentQty;
@@ -1310,14 +1266,13 @@
                     name: currentProduct.name,
                     price: currentProduct.price,
                     image: currentProduct.image,
-                    size: currentSize,
                     quantity: currentQty
                 });
             }
 
             saveCart();
             updateCartBadge();
-            showToast(`${currentQty}x ${currentProduct.name} (Size ${currentSize}) added`);
+            showToast(`${currentQty}x ${currentProduct.name} added`);
             closeModal();
         }
 
@@ -1384,7 +1339,6 @@
                         <img src="${item.image}" alt="${item.name}" class="cart-item-img">
                         <div class="cart-item-info">
                             <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-meta">Size: ${item.size}</div>
                             <div class="cart-item-price">₱${itemTotal.toFixed(2)}</div>
                             <div class="cart-item-controls">
                                 <button class="cart-qty-btn" onclick="changeCartQty(${index}, -1)">−</button>
@@ -1510,7 +1464,7 @@
             let message = "Hi TANGO! I would like to order:\n\n";
             
             cart.forEach(item => {
-                message += `• ${item.name} (Size ${item.size}) x${item.quantity} — ₱${(item.price * item.quantity).toFixed(2)}\n`;
+                message += `• ${item.name} x${item.quantity} — ₱${(item.price * item.quantity).toFixed(2)}\n`;
             });
 
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
