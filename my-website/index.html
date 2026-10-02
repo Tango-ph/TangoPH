@@ -1038,15 +1038,13 @@
         </div>
     </footer>
 
-    <!-- Sanity CDN Client -->
-    <script src="https://unpkg.com/@sanity/client"></script>
-
     <script>
         // ============================================
         // SANITY CONFIGURATION
         // ============================================
         const SANITY_PROJECT_ID = 'exdwsr3t';
         const SANITY_DATASET = 'production';
+        const SANITY_API_VERSION = '2024-01-01';
 
         // ============================================
         // ⚠️ CHANGE THIS TO YOUR FACEBOOK PAGE NAME ⚠️
@@ -1081,16 +1079,33 @@
         let selectedDelivery = localStorage.getItem('tangoDelivery') || "Metro Manila";
         let selectedPayment = localStorage.getItem('tangoPayment') || "gcash";
 
-        // --- Initialize Sanity Client ---
-        // FIX: Using SanityClient.createClient() from the unpkg UMD build
-        const sanity = SanityClient.createClient({
-            projectId: SANITY_PROJECT_ID,
-            dataset: SANITY_DATASET,
-            apiVersion: '2024-01-01',
-            useCdn: true
-        });
+        // --- Load Products directly from Sanity's HTTP API ---
+        // No external library needed. Uses plain fetch().
+        async function fetchSanityProducts() {
+            const query = `*[_type == "product"] | order(_createdAt desc) {
+                "id": _id,
+                name,
+                price,
+                originalPrice,
+                category,
+                description,
+                "image": image.asset->url,
+                "images": gallery[].asset->url,
+                stock,
+                isNew,
+                trending
+            }`;
 
-        // --- Load Products from Sanity ---
+            const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Sanity API responded with ${response.status}`);
+            }
+            const data = await response.json();
+            return data.result || [];
+        }
+
         async function loadProducts() {
             const grid = document.getElementById('product-grid');
             const trendingScroll = document.getElementById('trending-scroll');
@@ -1100,21 +1115,7 @@
             trendingScroll.innerHTML = Array(4).fill('<div class="skeleton-card" style="min-width:240px;height:280px;"></div>').join('');
 
             try {
-                const query = `*[_type == "product"] | order(_createdAt desc) {
-                    "id": _id,
-                    name,
-                    price,
-                    originalPrice,
-                    category,
-                    description,
-                    "image": image.asset->url,
-                    "images": gallery[].asset->url,
-                    stock,
-                    isNew,
-                    trending
-                }`;
-
-                const sanityProducts = await sanity.fetch(query);
+                const sanityProducts = await fetchSanityProducts();
 
                 // Map Sanity fields to match our shop's expected format
                 products = sanityProducts.map(p => ({
